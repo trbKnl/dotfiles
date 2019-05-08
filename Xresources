@@ -1,0 +1,80 @@
+
+!urxvt.font: xft:hack:size=12
+URxvt.font: xft:Iosevka Term ss09:pixelsize=16
+
+URxvt.scrollBar: false
+
+!---load plugins
+URxvt.perl-ext-common: default,resize-font,keyboard-select
+
+!--- Urxvt solarized theme 
+URxvt.solarized.default: dark
+URxvt.keysym.Mod1-c: perl:solarized:toggle
+! needed to have correct colors
+URxvt.intensityStyles: false 
+!---
+
+! keyboard-select
+! h/j/k/l:    Move cursor left/down/up/right (also with arrow keys)
+!g/G/0/^/$/H/M/L/f/F/;/,/w/W/b/B/e/E: More vi-like cursor movement keys
+!'/'/?:      Start forward/backward search
+!n/N:        Repeat last search, N: in reverse direction
+!Ctrl-f/b:   Scroll down/up one screen
+!Ctrl-d/u:   Scroll down/up half a screen
+!v/V/Ctrl-v: Toggle normal/linewise/blockwise selection
+!y/Return:   Copy selection to primary buffer, Return: quit afterwards
+!Y:          Copy selected lines to primary buffer or cursor line and quit
+!q/Escape:   Quit keyboard selection mode
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keyboard-select.clipboard: true
+
+!resize-font
+URxvt.keysym.C-Down: resize-font:smaller
+URxvt.keysym.C-Up: resize-font:bigger
+
+
+! force dpi to be good for my screen use syntax xft.dpi: int
+Xft.dpi: 100
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
+! set custom colors, these colors are also being used for i3
+! -----------------------------------------------------------------------------
+! File: gruvbox-dark.xresources
+! Description: Retro groove colorscheme generalized
+! Author: morhetz <morhetz@gmail.com>
+! Source: https://github.com/morhetz/gruvbox-generalized
+! Last Modified: 6 Sep 2014
+! -----------------------------------------------------------------------------
+
+! hard contrast: *background: #1d2021
+*background: #282828
+! soft contrast: *background: #32302f
+*foreground: #ebdbb2
+! Black + DarkGrey
+*color0:  #282828
+*color8:  #928374
+! DarkRed + Red
+*color1:  #cc241d
+*color9:  #fb4934
+! DarkGreen + Green
+*color2:  #98971a
+*color10: #b8bb26
+! DarkYellow + Yellow
+*color3:  #d79921
+*color11: #fabd2f
+! DarkBlue + Blue
+*color4:  #458588
+*color12: #83a598
+! DarkMagenta + Magenta
+*color5:  #b16286
+*color13: #d3869b
+! DarkCyan + Cyan
+*color6:  #689d6a
+*color14: #8ec07c
+! LightGrey + White
+*color15: #ebdbb2
