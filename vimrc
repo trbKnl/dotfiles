@@ -10,20 +10,17 @@ Plugin 'svermeulen/vim-easyclip'
 Plugin 'tpope/vim-repeat'
 Plugin 'jalvesaq/Nvim-R'
 Plugin 'jalvesaq/vimcmdline'
-"" Plugin 'altercation/vim-colors-solarized'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'lervag/vimtex'
-Plugin 'vim-scripts/Conque-GDB'
-Plugin 'octol/vim-cpp-enhanced-highlight'
 
 call vundle#end()
 filetype plugin indent on
 
-
-" """""""""""""""""  Nvim-R specific, vim configuration 
-" Change Leader and LocalLeader keys:
+" Settings for plugins and usability 
+" Change localLeader key:
 let maplocalleader = ","
 
+" """""""""""""""""  Nvim-R specific, vim configuration 
 " Use Ctrl+Space to do omnicompletion:
 if has("gui_running")
     inoremap <C-Space> <C-x><C-o>
@@ -60,6 +57,12 @@ let g:ycm_filetype_blacklist = {
 let g:EasyClipShareYanks = 1
 
 
+" """""""""""""""""  color theme settings
+set background=dark
+set t_Co=256
+colorscheme gruvbox 
+syntax enable
+
 " """""""""""""""""  my own usabilty settings
 "map W also to w
 command! W :w 
@@ -68,7 +71,7 @@ command! Q :q
 " set line numbers
 set number 
 
-"navigate by display lines 
+" navigate by display lines 
 " noremap j gj 
 " noremap k gk
 
@@ -83,11 +86,7 @@ set softtabstop=4   " Sets the number of columns for a TAB
 
 set expandtab       " Expand TABs to spaces
 
-" """""""""""""""""  color theme settings
-"
-set background=dark
-set t_Co=256
-colorscheme gruvbox 
-syntax enable
-
+" Yanks directly in primary register
+noremap <Leader>y "*y 
+noremap <Leader>p "*p
 

@@ -2,4 +2,6 @@ alias k='~/.config/keyboard.sh'
 alias s='~/.config/switch.sh'
 alias v='vim'
 alias koptelefoon='echo "connect 2C:41:A1:7F:C2:51" | bluetoothctl'
-
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias tree='tree -C'

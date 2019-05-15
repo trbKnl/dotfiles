@@ -10,20 +10,22 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 #
 #---- start up scripts ----
-exec --no-startup-id xrandr --output eDP-1 --mode 1920x1080 #set the screen resolution
+#
+#exec --no-startup-id xrandr --output eDP1 --mode 1920x1080 #set the screen resolution
 exec --no-startup-id nm-applet #start wifi applet
-exec --no-startup-id workrave #start workrave apple
-exec --no-startup-id ~/compton/compton --config ~/.config/.compton.conf #start compton composit
-exec --no-startup-id feh --bg-scale ~/Pictures/background/background.jpg #set the wallpaper
+#exec --no-startup-id workrave #start workrave apple
+exec --no-startup-id compton --backend glx --vsync
+#exec --no-startup-id feh --bg-scale ~/Pictures/background/background.jpg #set the wallpaper
 
 # create a file that detects if external monitor has been connected at startup
-exec --no-startup-id xrandr --query  | grep "HDMI-[0-9] connected" | awk '{print $1}' >> /tmp/monitor.dat 
+#exec --no-startup-id xrandr --query  | grep "HDMI-[0-9] connected" | awk '{print $1}' >> /tmp/monitor.dat 
+
 
 # Add root to allow to acces the Xsession
 # This allows sudo crontab to have acces to the Xsession
 # and to spawn a zenity gui window to the current user 
 # sudo crontab is needed to have acces to systemctl
-exec --no-startup-id xhost +SI:localuser:root
+#exec --no-startup-id xhost +SI:localuser:root
 
 #polybar startup
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -39,11 +41,11 @@ set $mod Mod4
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:Liberation Sans 10 
-font xft:monospace 10 
+#font xft:Iosevka light: 10  
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+font pango:DejaVu Sans Mono 9
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -56,9 +58,9 @@ font xft:monospace 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvt256c 
-bindsym Insert exec urxvt256c 
-set $TERMINAL urxvt256c
+bindsym $mod+Return exec urxvt
+bindsym Insert exec urxvt
+set $TERMINAL urxvt
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -222,8 +224,8 @@ bindsym $mod+b exec firefox
 
 # create a scratchpad window for spotify
 for_window [instance="spotify"] move window to scratchpad
-exec --no-startup-id flatpak run com.spotify.Client
-bindsym $mod+m [instance="spotify"] scratchpad show
+exec --no-startup-id flatpak run com.spotify.Client --force-device-scale-factor=1.5
+bindsym $mod+m [instance="spotify"] scratchpad show fullscreen enable
 
 # create a scratchpad window for calendar
 for_window [instance="calendar"] move window to scratchpad
@@ -249,29 +251,26 @@ bindsym XF86WLAN exec :
 
 # map the media keys
 #
-# set the volumne control keys
-bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 10%- 
-bindsym F2 exec amixer -D pulse sset Master 10%- 
-bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 10%+ 
-bindsym F3 exec amixer -D pulse sset Master 10%+ 
-bindsym $mod+XF86AudioLowerVolume exec amixer -D pulse sset Master 3%- #add mod key for fine tuning
-bindsym $mod+F2 exec amixer -D pulse sset Master 3%- #add mod key for fine tuning
-bindsym $mod+XF86AudioRaiseVolume exec amixer -D pulse sset Master 3%+ #add mod key for fine tuning
-bindsym $mod+F3 exec amixer -D pulse sset Master 3%+ #add mod key for fine tuning
-bindsym XF86AudioMute exec amixer -D pulse sset Master toggle
-bindsym F1 exec amixer -D pulse sset Master toggle
+# Set the volume control keys
+# @DEFAULT_SINK@ indicates my default sink, which has been set in
+# /etc/pulse/default.pa, the default has been set to analog-stereo (internal speakers)
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym F2 exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec ~/.config/volumeUp.sh
+bindsym F3 exec ~/.config/volumeUp.sh
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle 
+bindsym F1 exec pactl set-sink-mute @DEFAULT_SINK@ toggle 
 
 # set the mute and F4 key to toggle play pause in spotify
 bindsym XF86AudioMicMute exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 bindsym F4 exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+bindsym XF86LaunchA exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 
 # set mod + equal to play the next song
 bindsym $mod+equal exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 
 # set mod + - to play the next song
 bindsym $mod+minus exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
-
-
 
 
 ### map the brightness keys
@@ -293,8 +292,6 @@ bindsym Mod1+Shift+o		gaps outer current minus 5
 
 bindsym Mod1+i			gaps inner current plus 5
 bindsym Mod1+Shift+i		gaps inner current minus 5
-
-
 
 
 
@@ -325,8 +322,7 @@ hide_edge_borders smart
 # finds out, if available)
 bar {
 	position bottom
-        #status_command i3blocks -c ~/.config/.i3blocks.conf
-        status_command i3status -c ~/.config/.i3status.conf
+        status_command i3status -c ~/.config/i3status.conf
 
     colors {
         background              $bg 

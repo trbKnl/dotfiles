@@ -1,6 +1,6 @@
 
 !urxvt.font: xft:hack:size=12
-URxvt.font: xft:Iosevka Term ss09:pixelsize=16
+URxvt.font: xft:Iosevka Light:size=9
 
 URxvt.scrollBar: false
 
@@ -34,7 +34,7 @@ URxvt.keysym.C-Up: resize-font:bigger
 
 
 ! force dpi to be good for my screen use syntax xft.dpi: int
-Xft.dpi: 100
+Xft.dpi: 210 
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull
@@ -42,7 +42,12 @@ Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
 
-! set custom colors, these colors are also being used for i3
+! set colors for colored man pages
+URxvt.colorIT:      #87af5f
+URxvt.colorBD:      #d7d7d7
+URxvt.colorUL:      #87afd7
+
+! set custom colors, These colors are also being used for i3
 ! -----------------------------------------------------------------------------
 ! File: gruvbox-dark.xresources
 ! Description: Retro groove colorscheme generalized
